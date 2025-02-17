@@ -4,4 +4,4 @@ koths:
     schedule: "MONDAY|12:00;SUNDAY|12:00" 
     zone:
       world-name: "world"
-      middle-position: 0, 0, 0
+      middle-position: "0,0,0"

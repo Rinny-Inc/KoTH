@@ -14,21 +14,27 @@ import net.minecraft.util.com.google.common.collect.Maps;
 
 public class KoTH {
 	private LinkedHashMap<UUID, Long> inZone;
-	private boolean guildAllowed;
-	private Location location;
-	private int duration;
+	private final String name;
+	private final boolean guildAllowed;
+	private final Location location;
+	private final int duration;
 	private BukkitTask task;
 	private Main main;
-	private Date[] schedule;
+	private final Date[] schedule;
 	
-	public KoTH(Main main, boolean guildAllowed, Location location, Date[] schedule) {
+	public KoTH(Main main, String name, boolean guildAllowed, Location location, Date[] schedule) {
 		this.main = main;
+		this.name = name;
 		this.inZone = Maps.newLinkedHashMap();
 		this.guildAllowed = guildAllowed;
 		this.location = location;
 		this.duration = 20 * 60 * 5;
 		this.schedule = schedule;
 		this.startKoTHTask(this);
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	public boolean isWon() {
@@ -46,7 +52,7 @@ public class KoTH {
 	}
 	
 	public boolean isLocationInZone(Location location) {
-		return location.distanceSquared(this.location) <= 5 * 5;
+		return location.distanceSquared(this.location) <= (5 * 5) && location.getBlockY() >= this.location.getBlockY();
 	}
 
 	public LinkedHashMap<UUID, Long> getPlayers() {
@@ -75,6 +81,10 @@ public class KoTH {
 	
 	public int getDuration() {
 		return this.duration;
+	}
+	
+	public Date[] getSchedule() {
+		return this.schedule;
 	}
 	
 	private void createPortal() {
@@ -137,7 +147,6 @@ public class KoTH {
 			this.inZone.clear();
 			this.inZone = null;
 		}
-		this.location = null;
 		this.main = null;
 	}
 }

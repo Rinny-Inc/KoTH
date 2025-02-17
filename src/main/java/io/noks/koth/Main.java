@@ -4,13 +4,17 @@ import javax.annotation.Nullable;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.noks.koth.managers.ConfigManager;
+
 public class Main extends JavaPlugin {
+	public ConfigManager config;
 	public @Nullable KoTH active = null;
 	
 	@Override
 	public void onEnable() {
 		this.getConfig().options().copyDefaults(true);
 		this.saveDefaultConfig();
+		this.config = new ConfigManager(this);
 		new Listeners(this);
 	}
 	
