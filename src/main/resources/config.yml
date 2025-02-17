@@ -1,14 +1,7 @@
 # Use 24h format
-schedule:
-  monday: "12:00;13:00"
-  tuesday: "12:00"
-  wednesday: "12:00"
-  thursday: "12:00"
-  friday: "12:00"
-  saturday: "12:00"
-  sunday: "12:00"
-  
-# ?CHANGE TO?
-#KOTHNAME:
-#  schedule: "MONDAY|12:00;SUNDAY|12:00" 
-  
+koths:
+  KOTHNAME:
+    schedule: "MONDAY|12:00;SUNDAY|12:00" 
+    zone:
+      world-name: "world"
+      middle-position: 0, 0, 0

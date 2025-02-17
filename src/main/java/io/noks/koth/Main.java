@@ -9,6 +9,8 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		this.getConfig().options().copyDefaults(true);
+		this.saveDefaultConfig();
 		new Listeners(this);
 	}
 	

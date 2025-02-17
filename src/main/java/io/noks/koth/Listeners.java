@@ -45,7 +45,7 @@ public class Listeners implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPortalTook(PlayerPortalEvent event) {
-		if (main.active == null) {
+		if (main.active == null || main.active.getLocation().getWorld().getName().equals("world")) {
 			event.setCancelled(true);
 			return;
 		}

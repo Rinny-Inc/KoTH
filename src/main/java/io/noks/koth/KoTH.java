@@ -1,10 +1,12 @@
 package io.noks.koth;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -17,24 +19,30 @@ public class KoTH {
 	private int duration;
 	private BukkitTask task;
 	private Main main;
+	private Date[] schedule;
 	
-	public KoTH(Main main, boolean guildAllowed, Location location, int duration) {
+	public KoTH(Main main, boolean guildAllowed, Location location, Date[] schedule) {
 		this.main = main;
 		this.inZone = Maps.newLinkedHashMap();
 		this.guildAllowed = guildAllowed;
 		this.location = location;
-		this.duration = duration;
-		this.startTask();
+		this.duration = 20 * 60 * 5;
+		this.schedule = schedule;
+		this.startKoTHTask(this);
 	}
 	
 	public boolean isWon() {
-		return this.inZone.values().stream().findFirst().orElse(0L) / 1000 >= this.duration * 60;
+		return this.inZone.values().stream().findFirst().orElse(1L) / 1000 >= this.duration * 60;
 	}
 	
 	private void endKoTH() {
-		// TODO: check if the dimension isnt overworld; kill all remaining players in the dimension after 1 hour.
+		this.task.cancel();
+		this.task = null;
+		if (location.getWorld().getName().equals("world")) {
+			return;
+		}
+		this.startDimensionCloseTask(this);
 		// TODO: spawn Bosses or spawn bosses at the start of the koth
-		// TODO: Close the portail in the overworld after the dimension is closed
 	}
 	
 	public boolean isLocationInZone(Location location) {
@@ -93,20 +101,31 @@ public class KoTH {
 		// TODO: close Nether portal
 	}
 	
-	private void startTask() {
+	private void startKoTHTask(KoTH koth) {
+		this.createPortal();
 		this.task = new BukkitRunnable() {
 			
 			@Override
 			public void run() {
-				if (KoTH.this.isWon()) {
-					KoTH.this.endKoTH();
+				if (!koth.isWon()) {
+					return;
 				}
+				koth.endKoTH();
 			}
 		}.runTaskTimerAsynchronously(main, 0, 20);
 	}
 	
-	private void startDimensionCloseTask() {
-		
+	private void startDimensionCloseTask(KoTH koth) {
+		this.task = new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				for (Player players : koth.location.getWorld().getPlayers()) {
+					players.setHealth(0.0D);
+				}
+				koth.closePortal();
+			}
+		}.runTaskLaterAsynchronously(main, 20 * 60 * 60);
 	}
 	
 	public void clearMemory() {
