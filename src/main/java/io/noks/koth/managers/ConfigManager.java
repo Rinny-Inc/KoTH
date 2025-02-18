@@ -1,6 +1,5 @@
 package io.noks.koth.managers;
 
-import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +17,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import io.noks.koth.KoTH;
 import io.noks.koth.Main;
@@ -27,8 +25,7 @@ public class ConfigManager {
 	public List<KoTH> list = new ArrayList<>();
 
 	public ConfigManager(Main main) {
-		File configFile = new File(main.getDataFolder(), "config.yml");
-		FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+		FileConfiguration config = main.getConfig();
 		ConfigurationSection kothsSection = config.getConfigurationSection("koths");
 
 		if (kothsSection == null) {
