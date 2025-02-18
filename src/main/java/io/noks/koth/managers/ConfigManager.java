@@ -50,7 +50,7 @@ public class ConfigManager {
 				Bukkit.getLogger().warning("Invalid world for KoTH " + kothName);
 				continue;
 			}
-			String[] split = zoneSection.getString("middle-location").split(",");
+			String[] split = zoneSection.getString("middle-position").split(",");
 			double x = Double.parseDouble(split[0]);
 			double y = Double.parseDouble(split[1]);
 			double z = Double.parseDouble(split[2]);
