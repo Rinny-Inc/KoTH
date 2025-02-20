@@ -30,7 +30,7 @@ public class KoTH {
 		this.location = location;
 		this.duration = 20 * 60 * 5;
 		this.schedule = schedule;
-		this.startKoTHTask(this);
+		//this.startKoTHTask(this);
 	}
 	
 	public String getName() {
@@ -52,7 +52,7 @@ public class KoTH {
 	}
 	
 	public boolean isLocationInZone(Location location) {
-		return location.distanceSquared(this.location) <= (5 * 5) && location.getBlockY() >= this.location.getBlockY();
+		return location.distanceSquared(this.location) <= (9 * 9) && location.getBlockY() >= this.location.getBlockY();
 	}
 
 	public LinkedHashMap<UUID, Long> getPlayers() {
