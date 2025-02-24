@@ -30,7 +30,6 @@ public class KoTH {
 		this.location = location;
 		this.duration = 20 * 60 * 5;
 		this.schedule = schedule;
-		//this.startKoTHTask(this);
 	}
 	
 	public String getName() {
@@ -44,6 +43,7 @@ public class KoTH {
 	private void endKoTH() {
 		this.task.cancel();
 		this.task = null;
+		this.main.active = null;
 		if (location.getWorld().getName().equals("world")) {
 			return;
 		}
@@ -109,6 +109,17 @@ public class KoTH {
 			return;
 		}
 		// TODO: close Nether portal
+	}
+	
+	public boolean isScheduledNow() {
+	    long now = System.currentTimeMillis();
+	    for (Date scheduled : schedule) {
+	        long diff = Math.abs(scheduled.getTime() - now);
+	        if (diff <= 60000) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 	
 	private void startKoTHTask(KoTH koth) {

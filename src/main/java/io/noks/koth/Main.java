@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.noks.koth.managers.ConfigManager;
+import io.noks.koth.task.SchedulerTask;
 
 public class Main extends JavaPlugin {
 	public ConfigManager config;
@@ -16,6 +17,7 @@ public class Main extends JavaPlugin {
 		this.saveDefaultConfig();
 		this.config = new ConfigManager(this);
 		new Listeners(this);
+		new SchedulerTask(this);
 	}
 	
 	@Override
