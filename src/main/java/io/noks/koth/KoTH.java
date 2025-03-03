@@ -37,7 +37,11 @@ public class KoTH {
 	}
 	
 	public boolean isWon() {
-		return this.inZone.values().stream().findFirst().orElse(1L) / 1000 >= this.duration * 60;
+	    long currentTime = System.currentTimeMillis();
+	    long requiredMillis = (this.duration / 20) * 1000;
+
+	    return this.inZone.values().stream()
+	        .anyMatch(joinTime -> (currentTime - joinTime) >= requiredMillis);
 	}
 	
 	private void endKoTH() {
@@ -122,8 +126,10 @@ public class KoTH {
 	    return false;
 	}
 	
-	private void startKoTHTask(KoTH koth) {
+	public void startKoTHTask() {
 		this.createPortal();
+		this.main.active = this;
+		final KoTH koth = this;
 		this.task = new BukkitRunnable() {
 			
 			@Override

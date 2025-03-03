@@ -22,7 +22,7 @@ public class SchedulerTask extends BukkitRunnable {
 			if (!koth.isScheduledNow()) {
 				continue;
 			}
-			this.main.active = koth;
+			koth.startKoTHTask();
 			return;
 		}
 	}
