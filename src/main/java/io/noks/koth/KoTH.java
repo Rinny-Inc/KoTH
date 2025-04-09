@@ -130,11 +130,13 @@ public class KoTH {
 		this.createPortal();
 		this.main.active = this;
 		final KoTH koth = this;
+		this.main.getServer().broadcastMessage("KoTH " + this.name + " just started!");
 		this.task = new BukkitRunnable() {
 			
 			@Override
 			public void run() {
 				if (!koth.isWon()) {
+					// TODO: send a boss bar
 					return;
 				}
 				koth.endKoTH();

@@ -43,7 +43,7 @@ public class Listeners implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPortalTook(PlayerPortalEvent event) {
 		if (main.active == null || main.active.getLocation().getWorld().getName().equals("world")) {
 			event.setCancelled(true);
@@ -62,6 +62,7 @@ public class Listeners implements Listener {
 			}
 			if (!main.active.getPlayers().containsKey(player.getUniqueId()) && main.active.isLocationInZone(player.getLocation())) {
 				main.active.addPlayer(player.getUniqueId());
+				main.getServer().broadcastMessage("player entered the capture zone");
 				return;
 			}
 		}
